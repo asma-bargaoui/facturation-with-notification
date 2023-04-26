@@ -1,0 +1,23 @@
+<table class="table mt-5">
+    <thead class="table-danger">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col"></th>
+        <th scope="col">code</th>
+        <th scope="col">libelle</th>
+        <th scope="col">action1</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let app of Ids; index as i">
+        <th scope="row"></th>
+        <td>{{i+1}}</td>
+        <td>{{app.code}}</td>
+        <td>{{app.libelle}}</td>
+        <td>
+          <button class="btn btn-outline-danger mx-3" (click)="onDelete(app.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  

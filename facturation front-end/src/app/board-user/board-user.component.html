@@ -1,0 +1,32 @@
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label>Application Code:</label>
+    <input type="text" [(ngModel)]="applicationCode" name="applicationCode">
+  </div>
+  <div>
+    <option>structure_id</option>
+    <option>ministere</option>
+   
+    </div>
+  <div>
+    <label>Nbr Reel:</label>
+    <input type="number" [(ngModel)]="nbr_reel" name="nbr_reel">
+  </div>
+  <div>
+    <label>Date Signature:</label>
+    <input type="date" [(ngModel)]="date_signature" name="date_signature">
+  </div>
+  <div>
+    <label>Total Amount:</label>
+    <input type="number" [(ngModel)]="total_amount" name="total_amount">
+  </div>
+  <div>
+    <label>Nbr Min:</label>
+    <input type="text" [(ngModel)]="nbr_min" name="nbr_min">
+  </div>
+  <div>
+    <label>Nbr Max:</label>
+    <input type="text" [(ngModel)]="nbr_max" name="nbr_max">
+  </div>
+  <button type="submit">Submit</button>
+</form>
