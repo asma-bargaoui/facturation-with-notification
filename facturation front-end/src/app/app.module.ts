@@ -30,6 +30,7 @@ import { ApplicationBoardComponent } from './application-board/application-board
     BoardUserComponent,
     FactureComponent,
     ApplicationBoardComponent,
+    
   ],
   imports: [
     BrowserModule,

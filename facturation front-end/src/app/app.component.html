@@ -1,44 +1,42 @@
-<div id="app">
-  <nav class="navbar navbar-expand navbar-outline-info bg-info">
-    
-    <ul class="navbar-nav mr-auto" routerLinkActive="active">
-      <li class="nav-item">
-        <a href="/home" class="nav-link" routerLink="home"><strong>Home</strong> </a>
-      </li>
-      <li class="nav-item" *ngIf="showAdminBoard">
-        <a href="/admin" class="nav-link" routerLink="admin"><strong >Admin Board</strong></a>
-      </li>
-      <li class="nav-item" *ngIf="showAdminBoard">
-      <a   active [routerLink]= "['/application']" class="nav-link"><strong>Application</strong></a>
-      </li>
-      
-  <li class="nav-item" *ngIf="isLoggedIn && !showAdminBoard">
 
-        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user"><strong>User</strong></a>
-      </li>
-    
-</ul>
-    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+ 
+
+   <input type="checkbox" id="check">
+   <label for="check">
+     <i class="fas fa-bars" id="btn"></i>
+     <i class="fas fa-times" id="cancel"></i>
+   </label>
+   <div class="sidebar">
+     <header>Menu</header>
+   
+     <a href="/home">
+       <i class="fas fa-link" routerLink="home"></i>
+       <span>Home</span>
+     </a>
      
-      <li class="nav-item">
-        <a href="/login" class="nav-link" routerLink="login"><strong>Login</strong></a>
-      </li>
-    </ul>
+     <a href="/admin">
+       <i class="fas fa-stream" routerLink="admin"></i>
+       <span>Admin Board</span>
+     </a>
+     
+     <li class="nav-item" *ngIf="showAdminBoard"></li>
+     <a href="/application">
+        <i class="fas fa-calendar"></i>
+       <span>Application</span>
+     </a>
 
-    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-      <li class="nav-item">
-        <a href="/profile" class="nav-link" routerLink="profile"><strong>{{ username }}</strong></a>
-        
-      </li>
-      <li class="nav-item">
-        <a href class="nav-link" (click)="logout()"><strong>LogOut</strong></a>
-      </li>
-    </ul>
-    
-  </nav>
-
-  <div class="container">
+     <a href="#">
+       <i class="far fa-question-circle"></i>
+       <span>structure</span>
+     </a>
+   </div>
+   <div class="container">
     <router-outlet></router-outlet>
    
   </div>
-</div>
+   
+ 
+   
+

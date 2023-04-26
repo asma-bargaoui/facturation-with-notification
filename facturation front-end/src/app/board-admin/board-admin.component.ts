@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 
+
 interface User {
   username: string;
   email: string;
@@ -77,7 +78,6 @@ export class BoardAdminComponent implements OnInit {
           console.log('User deleted successfully.');
           alert('User deleted successfully.');
           // show the alert
-          
         },
       });
   }
