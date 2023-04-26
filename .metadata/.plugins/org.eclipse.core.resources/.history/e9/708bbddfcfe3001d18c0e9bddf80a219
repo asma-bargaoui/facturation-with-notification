@@ -1,0 +1,25 @@
+package com.app.security.services;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.models.Application;
+import com.app.models.Structure;
+import com.app.repository.ApplicationRepository;
+import com.app.repository.StructureRepository;
+@Service
+@Transactional
+public class StructureService {
+	@Autowired 
+	StructureRepository StructureRepo;
+	private final StructureRepository structureRepository;
+
+    public StructureService(StructureRepository structureRepository) {
+        this.structureRepository = structureRepository;
+    }
+    public Structure createStructure(Structure structure) {
+        return structureRepository.save(structure);
+    }
+}

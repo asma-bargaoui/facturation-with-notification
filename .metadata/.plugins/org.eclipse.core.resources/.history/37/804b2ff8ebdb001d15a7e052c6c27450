@@ -1,0 +1,59 @@
+package payload.response;
+
+import java.math.BigDecimal;
+
+import com.app.models.Application;
+
+public class ConvensionResponse {
+	   private String application;
+	    private String structure;
+	    private BigDecimal nbr_reel;
+	    private BigDecimal price;
+	    private BigDecimal totalAmount;
+
+	    public ConvensionResponse(String application, String structure, BigDecimal price,BigDecimal nbr_reel,BigDecimal totalAmount) {
+	        this.application = application;
+	        this.structure = structure;
+	        this.nbr_reel=nbr_reel;
+	        this.price = price;
+	        this.totalAmount = nbr_reel.multiply(price);
+	        
+	    }
+	    
+
+	    public String getApplication() {
+	        return application;
+	    }
+
+	    public void setApplication(String application) {
+	        this.application = application;
+	    }
+
+	    public String getStructure() {
+	        return structure;
+	    }
+
+	    public void setStructure(String structure) {
+	        this.structure = structure;
+	    }
+
+	    public BigDecimal getPrice() {
+	        return price;
+	    }
+
+	    public void setPrice(BigDecimal price) {
+	        this.price = price;
+	    }
+	    public BigDecimal getNbr_reel() {
+			return nbr_reel;
+		}
+
+		public void setNbr_reel(BigDecimal nbr_reel) {
+			this.nbr_reel = nbr_reel;
+		}
+
+		
+	
+    
+    
+}

@@ -1,0 +1,71 @@
+package payload.response;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+
+public class ConvensionResponse {
+	   private String application;
+	    private String structure;
+	    private BigDecimal nbr_reel;
+	    private BigDecimal price;
+	   private BigDecimal totalAmount;
+	   private LocalDateTime dateSignature;
+
+	    public ConvensionResponse(String application, String structure, BigDecimal price,BigDecimal nbr_reel,BigDecimal totalAmount,) {
+	        this.application = application;
+	        this.structure = structure;
+	        this.nbr_reel=nbr_reel;
+	        this.price = price;
+	        this.totalAmount = totalAmount;
+	       // this.dateSignature=dateSignature;
+	        
+	    }
+	    
+
+	    public String getApplication() {
+	        return application;
+	    }
+
+	    public void setApplication(String application) {
+	        this.application = application;
+	    }
+
+	    public String getStructure() {
+	        return structure;
+	    }
+
+	    public void setStructure(String structure) {
+	        this.structure = structure;
+	    }
+
+	    public BigDecimal getPrice() {
+	        return price;
+	    }
+
+	    public void setPrice(BigDecimal price) {
+	        this.price = price;
+	    }
+	    public BigDecimal getNbr_reel() {
+			return nbr_reel;
+		}
+
+		public void setNbr_reel(BigDecimal nbr_reel) {
+			this.nbr_reel = nbr_reel;
+		}
+
+
+		public BigDecimal getTotalAmount() {
+			return totalAmount;
+		}
+
+
+		public void setTotalAmount(BigDecimal totalAmount) {
+			this.totalAmount = totalAmount;
+		}
+
+		
+	
+    
+    
+}

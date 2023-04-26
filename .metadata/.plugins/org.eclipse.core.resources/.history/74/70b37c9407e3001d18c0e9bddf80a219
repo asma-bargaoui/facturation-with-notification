@@ -1,0 +1,213 @@
+package com.app.security.services;
+
+import java.math.BigDecimal;
+
+
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.app.models.Application;
+import com.app.models.Convention;
+import com.app.models.Facture;
+import com.app.models.Structure;
+import com.app.repository.ApplicationRepository;
+import com.app.repository.ConventionRepository;
+import com.app.repository.FactureRepository;
+import com.app.repository.StructureRepository;
+
+import payload.request.ConventionRequest;
+import payload.response.ConventionResponse;
+
+@Service
+public class ConventionService {
+	@Autowired 
+	ConventionRepository conventionRepo;
+	private final ConventionRepository conventionRepository;
+	
+    @Autowired
+    private ApplicationRepository applicationRepository;
+    
+    @Autowired
+    private StructureRepository structureRepository;
+    
+    @Autowired
+    private FactureRepository factureRepository;
+        
+    public ConventionService(ConventionRepository conventionRepository) {
+        this.conventionRepository = conventionRepository;
+    }
+    
+    public ConventionResponse createconvention(ConventionRequest request) {
+        String applicationCode = request.getApplicationCode();
+        String structureMinistere = request.getStructureCode();
+
+        Application application = applicationRepository.findByCode(applicationCode)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Application not found"));
+
+        Structure structure = structureRepository.findByMinistere(structureMinistere)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Structure not found"));
+
+        String durationStr = request.getconventionDuration();
+        if (durationStr == null) {
+            throw new IllegalArgumentException("Duration cannot be null");
+        }
+        Duration duration = parseDurationString(durationStr);
+        if (duration == null) {
+            throw new IllegalArgumentException("Invalid duration format: " + durationStr);
+        }
+
+        BigDecimal nbr_Min = request.getNbr_Min();
+        BigDecimal nbr_Max = request.getNbr_Max();
+
+        if (nbr_Min == null) {
+            throw new IllegalArgumentException("Minimum value cannot be null");
+        }
+
+        if (nbr_Min.compareTo(BigDecimal.valueOf(15)) < 0) {
+            throw new IllegalArgumentException("Minimum value cannot be less than 15: " + nbr_Min);
+        }
+
+        if (nbr_Max.compareTo(BigDecimal.valueOf(30)) > 0) {
+            throw new IllegalArgumentException("Maximum value cannot be greater than 30: " + nbr_Max);
+        }
+
+        Convention convention = new Convention();
+        convention.setApplication(application);
+        convention.setStructure(structure);
+        convention.setNbr_reel(request.getNbr_reel());
+        convention.setNbr_Min(nbr_Min);
+        convention.setNbr_Max(nbr_Max);
+        convention.setTotalAmount(request.getNbr_reel().multiply(application.getPrix()));
+        convention.setconventionDuration(duration);
+
+        LocalDate date = request.getDateSignature();
+        LocalDateTime signatureDateTime = LocalDateTime.of(date, LocalTime.MIDNIGHT);
+        convention.setDateSignature(signatureDateTime.toLocalDate());
+
+        conventionRepository.save(convention);
+
+        
+        Facture facture = new Facture();
+        facture.setConvention(convention);
+        facture.setStructure(convention.getStructure().getMinistere());
+        facture.setMontant(convention.getTotalAmount());
+
+        LocalDate startDate = convention.getDateSignature();
+        Duration durationForFacture = convention.getconventionDuration();
+        LocalDate endDate = startDate.plus(durationForFacture);
+        facture.setEchance(Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
+        Duration periode = durationForFacture;
+        facture.setPeriode(periode);
+
+        factureRepository.save(facture);
+        
+      
+        ConventionResponse response = new ConventionResponse(application.getCode(), structure.getMinistere(),
+                application.getPrix(), request.getNbr_reel(),convention.getNbr_Min(), convention.getNbr_Max(), convention.getTotalAmount(), convention.getDateSignature());
+
+        return response;
+    } 
+    private Duration parseDurationString(String conventionDuration) {
+        int durationInSeconds = 0;
+        if (conventionDuration.contains("jour")) {
+            durationInSeconds = Integer.parseInt(conventionDuration.split(" ")[0]) * 24 * 60 * 60;
+        } else if (conventionDuration.contains("mois")) {
+            durationInSeconds = Integer.parseInt(conventionDuration.split(" ")[0]) * 30 * 24 * 60 * 60;
+        } else if (conventionDuration.contains("annee")) {
+            durationInSeconds = Integer.parseInt(conventionDuration.split(" ")[0]) * 365 * 24 * 60 * 60;
+        } else {
+            throw new IllegalArgumentException("Invalid duration format: " + conventionDuration);
+        }
+        // Limit the duration to a maximum of 3 years
+        if (durationInSeconds > 3 * 365 * 24 * 60 * 60) {
+            throw new IllegalArgumentException("Duration cannot be longer than 3 years: " + conventionDuration);
+        }
+        return Duration.ofSeconds(durationInSeconds);
+    }
+   /* private Duration parseDurationString(String conventionDuration) {
+        int durationInDays = 0;
+        if (conventionDuration.contains("jour")) {
+            durationInDays = Integer.parseInt(conventionDuration.split(" ")[0]);
+        } else if (conventionDuration.contains("mois")) {
+            durationInDays = Integer.parseInt(conventionDuration.split(" ")[0]) * 30;
+        } else if (conventionDuration.contains("annee")) {
+            durationInDays = Integer.parseInt(conventionDuration.split(" ")[0]) * 365;
+        } else {
+            throw new IllegalArgumentException("Invalid duration format: " + conventionDuration);
+        }
+        // Limit the duration to a maximum of 3 years
+        if (durationInDays > 3 * 365) {
+            throw new IllegalArgumentException("Duration cannot be longer than 3 years: " + conventionDuration);
+        }
+        return Duration.ofDays(durationInDays);
+    }*/
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ /* public convention createconvention(conventionRequest request) {
+        String applicationCode = request.getApplicationCode();
+        String structureMinistere = request.getStructureCode();
+
+        // Retrieve the application from the database using the application code
+        Application application = applicationRepository.findByCode(applicationCode)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Application not found"));
+
+        // Retrieve the structure from the database using the ministry structure name
+        Structure structure = structureRepository.findByMinistere(structureMinistere)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Structure not found"));
+       
+        
+    
+        // Create a new convention object with the validated fields
+        convention convention = new convention();
+        convention.setApplication(application);
+        convention.setStructure(structure);
+        convention.setNbr_reel(request.getNbr_reel());
+        
+        
+       
+        
+        //Save the convention to the database
+       return conventionRepository.save(convention);
+        
+       /* conventionResponse response = new conventionResponse(
+                convention.getApplication(),
+                convention.getStructure(),
+                applicationPrice
+        );
+
+        return response;
+    }*/

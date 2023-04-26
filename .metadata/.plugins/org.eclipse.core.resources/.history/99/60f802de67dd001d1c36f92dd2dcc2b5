@@ -1,0 +1,140 @@
+package com.app.security.services;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.app.models.Application;
+import com.app.models.Convension;
+import com.app.models.Structure;
+import com.app.repository.ApplicationRepository;
+import com.app.repository.ConvensionRepository;
+import com.app.repository.StructureRepository;
+
+import payload.request.ConvensionRequest;
+import payload.response.ConvensionResponse;
+
+@Service
+public class ConvensionService {
+	@Autowired 
+	ConvensionRepository convensionRepo;
+	private final ConvensionRepository convensionRepository;
+	
+    @Autowired
+    private ApplicationRepository applicationRepository;
+    
+    @Autowired
+    private StructureRepository structureRepository;
+    
+    public ConvensionService(ConvensionRepository convensionRepository) {
+        this.convensionRepository = convensionRepository;
+    }
+    
+    public ConvensionResponse createConvension(ConvensionRequest request) {
+        String applicationCode = request.getApplicationCode();
+        String structureMinistere = request.getStructureCode();
+
+        // Retrieve the application from the database using the application code
+        Application application = applicationRepository.findByCode(applicationCode)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Application not found"));
+
+        // Retrieve the structure from the database using the ministry structure name
+        Structure structure = structureRepository.findByMinistere(structureMinistere)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Structure not found"));
+
+        // Create a new Convension object with the validated fields
+        Convension convension = new Convension();
+        convension.setApplication(application);
+        convension.setStructure(structure);
+        convension.setNbr_reel(request.getNbr_reel());
+        convension.setTotalAmount(request.getNbr_reel().multiply(application.getPrix()));
+        //convension.setDateSignature(LocalDateTime.now());
+         convension.setSignatureDate(LocalDate.parse(request.getDateSignature(), DateTimeFormatter.ISO_DATE));
+         
+        
+        //Save the convension to the database
+        convensionRepository.save(convension);
+
+      //Create a ConvensionResponse object with the required fields
+        ConvensionResponse response = new ConvensionResponse(application.getCode(), structure.getMinistere(),
+                application.getPrix(), request.getNbr_reel(), convension.getTotalAmount()/*convension.getDateSignature()*/);
+
+        return response;
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ /* public Convension createConvension(ConvensionRequest request) {
+        String applicationCode = request.getApplicationCode();
+        String structureMinistere = request.getStructureCode();
+
+        // Retrieve the application from the database using the application code
+        Application application = applicationRepository.findByCode(applicationCode)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Application not found"));
+
+        // Retrieve the structure from the database using the ministry structure name
+        Structure structure = structureRepository.findByMinistere(structureMinistere)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Structure not found"));
+       
+        
+    
+        // Create a new Convension object with the validated fields
+        Convension convension = new Convension();
+        convension.setApplication(application);
+        convension.setStructure(structure);
+        convension.setNbr_reel(request.getNbr_reel());
+        
+        
+       
+        
+        //Save the convension to the database
+       return convensionRepository.save(convension);
+        
+       /* ConvensionResponse response = new ConvensionResponse(
+                convension.getApplication(),
+                convension.getStructure(),
+                applicationPrice
+        );
+
+        return response;
+    }*/
+
+   
+    
+    
+    
+    
+    
+    
+    
+    
+}

@@ -1,0 +1,114 @@
+package com.app.models;
+
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(	name = "facture")
+public class Facture {
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+	
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "convention_id")
+	private Convention convention;
+	 
+    @Column(name = "structure")
+    private String structure;
+    
+    @Column(name="echance")
+    private Date echance;
+   
+    @Column(name="montant")
+    private BigDecimal montant;
+   
+    @Column(name="periode")
+    private Duration periode;
+   
+    @Column(name="paid")
+    private Boolean paid;
+
+	public Facture() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
+
+	public Convention getConvention() {
+		return convention;
+	}
+
+
+	public void setConvention(Convention convention) {
+		this.convention = convention;
+	}
+
+
+	public String getStructure() {
+		return structure;
+	}
+
+	public void setStructure(String structure) {
+		this.structure = structure;
+	}
+
+	public Date getEchance() {
+		return echance;
+	}
+
+	public void setEchance(Date echance) {
+		this.echance = echance;
+	}
+
+	public BigDecimal getMontant() {
+		return montant;
+	}
+
+	public void setMontant(BigDecimal montant) {
+		this.montant = montant;
+	}
+
+	
+
+	public Duration getPeriode() {
+		return periode;
+	}
+
+
+	public void setPeriode(Duration periode) {
+		this.periode = periode;
+	}
+
+
+	public Boolean getPaid() {
+		return paid;
+	}
+
+	public void setPaid(Boolean paid) {
+		this.paid = paid;
+	}
+    
+	
+}

@@ -1,0 +1,155 @@
+package com.app.models;
+
+import java.math.BigDecimal;
+
+import java.time.Duration;
+import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@Entity
+@Table(	name = "convention")
+public class Convention {
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+	@ManyToOne(fetch = FetchType.LAZY)
+	 @JoinColumn(name = "structure_id", referencedColumnName = "ministere")    private Structure structure;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "application_code", referencedColumnName = "code")
+	private Application application;
+    
+	@NotNull
+	@Column(name = "nbr_reel")
+    @JsonProperty("nbr_reel")
+	private BigDecimal nbr_reel;
+	
+	@NotNull
+	@Column(name = "nbr_Min")
+    @JsonProperty("nbr_Min")
+	private BigDecimal nbr_Min;
+	
+	@NotNull
+	@Column(name = "nbr_Max")
+    @JsonProperty("nbr_Max")
+	private BigDecimal nbr_Max;
+	
+	 @Column(name = "date_signature")
+	    private LocalDate dateSignature;
+	 
+	 @Column(name = "conventionDuration")
+	 private Duration conventionDuration;
+	
+	@Transient
+    private BigDecimal price;
+	
+	@Column(name = "total_amount")
+	@JsonProperty("total_amount")
+	private BigDecimal totalAmount;
+	
+	public Convention () {}
+	
+	public Convention (Structure structure,Application application,BigDecimal nbr_reel,BigDecimal totalAmount,LocalDate dateSignature,Duration conventionDuration,BigDecimal nbr_Min,BigDecimal nbr_Max) {
+		this.structure=structure;
+		this.application=application;
+		this.nbr_reel=nbr_reel;
+		this.totalAmount = totalAmount;
+		this.dateSignature = dateSignature;
+		this.conventionDuration= conventionDuration;
+		this.nbr_Min = nbr_Min;
+		this.nbr_Max =nbr_Max;
+		
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Structure  getStructure() {
+		return structure;
+	}
+	public void setStructure(Structure  structure) {
+		this.structure = structure;
+	}
+	
+	public Application getApplication() {
+		return application;
+	}
+
+	public void setApplication(Application application) {
+		this.application = application;
+	}
+
+	public BigDecimal getNbr_reel() {
+		return nbr_reel;
+	}
+	public void setNbr_reel(BigDecimal nbr_reel) {
+		this.nbr_reel = nbr_reel;
+	}
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public LocalDate getDateSignature() {
+		return dateSignature;
+	}
+
+	public void setDateSignature(LocalDate dateSignature) {
+		this.dateSignature = dateSignature;
+	}
+
+	public Duration getconventionDuration() {
+		return conventionDuration;
+	}
+
+	public void setconventionDuration(Duration conventionDuration) {
+		this.conventionDuration = conventionDuration;
+	}
+
+	public BigDecimal getNbr_Min() {
+		return nbr_Min;
+	}
+
+	public void setNbr_Min(BigDecimal nbr_Min) {
+		this.nbr_Min = nbr_Min;
+	}
+
+	public BigDecimal getNbr_Max() {
+		return nbr_Max;
+	}
+
+	public void setNbr_Max(BigDecimal nbr_Max) {
+		this.nbr_Max = nbr_Max;
+	}
+
+	
+
+	
+	
+}

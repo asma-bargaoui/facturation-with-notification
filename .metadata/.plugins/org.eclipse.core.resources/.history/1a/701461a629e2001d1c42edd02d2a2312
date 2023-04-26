@@ -1,0 +1,45 @@
+package com.app.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.app.models.Application;
+import com.app.models.Convension;
+import com.app.models.Structure;
+
+@Repository
+public interface ConvensionRepository extends JpaRepository<Convension, Long> {
+
+    //List<Convension> findByApplication(String applicationCode);
+
+    //List<Convension> findByStructure(String structureMinistere);
+
+}
+/*public Convension createConvension(ConvensionRequest request) {
+    String applicationCode = request.getApplication();
+    String structureMinistere = request.getStructure();
+
+    // Retrieve the application from the database using the application code
+    Application application = applicationRepository.findByCode(applicationCode)
+    		String structureMinistere = request.getStructure();
+
+    // Retrieve the structure from the database using the ministry structure name
+    Structure structure = structureRepository.findByMinistere(structureMinistere)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Structure not found"));
+
+
+    // Create a new Convension object with the validated fields
+    Convension convension = new Convension();
+    convension.setApplication(applicationCode);
+    convension.setStructure(structureMinistere);
+    convension.setNbr_reel(request.getNbr_reel());
+    
+    BigDecimal prix = application.getPrix();
+    BigDecimal totalAmount = prix.multiply(request.getNbr_reel());
+    convension.setTotalAmount(totalAmount);
+    
+    // Save the convension to the database
+    return convensionRepository.save(convension);
+}*/

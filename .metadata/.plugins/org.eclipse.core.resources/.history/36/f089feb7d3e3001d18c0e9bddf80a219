@@ -1,0 +1,19 @@
+package com.app.repository;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.app.models.Structure;
+
+@Repository
+public interface StructureRepository extends JpaRepository<Structure, Long> {
+
+    //Optional<Structure> findByMinistere(String ministere);
+   // @Query("SELECT s1 FROM Structure s1 JOIN Structure s2 ON s1.id = s2.id WHERE s1.id_ministere IS NOT NULL AND s2.id_ministere IS NULL")
+    //List<Structure> findMatchingStructures();
+}
+

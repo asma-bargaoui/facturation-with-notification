@@ -1,0 +1,40 @@
+package com.app.controllers;
+
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.app.models.Convension;
+import com.app.security.services.ConvensionService;
+
+import payload.request.ConvensionRequest;
+import payload.response.ConvensionResponse;
+
+@RestController
+@RequestMapping("/api/test")
+public class ConvensionController {
+	   
+    @Autowired
+    private ConvensionService convensionService;
+
+    
+    
+    @PostMapping("/convensions")
+	public ResponseEntity<ConvensionResponse> createConvension(@RequestBody ConvensionRequest request) {
+		ConvensionResponse response = convensionService.createConvension(request);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
+    
+  /* @PostMapping("/convensions")
+    public ResponseEntity<?> createConvension(@Valid @RequestBody ConvensionRequest convensionRequest) {
+       Convension convension = convensionService.createConvension(convensionRequest);
+      return ResponseEntity.created(null).body(convension.getId());
+    }*/
+}

@@ -1,0 +1,125 @@
+package com.app.models;
+
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@Entity
+@Table(	name = "convension")
+public class Convension {
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "structure_id", referencedColumnName = "ministere")
+    private Structure structure;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "application_code", referencedColumnName = "code")
+	private Application application;
+    
+	@NotNull
+	@Column(name = "nbr_reel")
+    @JsonProperty("nbr_reel")
+	private BigDecimal nbr_reel;
+	
+	 @Column(name = "date_signature")
+	    private LocalDateTime dateSignature;
+	 
+	 @Column(name = "durreconvension")
+	 private Duration durreconvension;
+	
+	@Transient
+    private BigDecimal price;
+	
+	@Column(name = "total_amount")
+	@JsonProperty("total_amount")
+	private BigDecimal totalAmount;
+	
+	public Convension () {}
+	
+	public Convension (Structure structure,Application application,BigDecimal nbr_reel,BigDecimal totalAmount,LocalDateTime dateSignature,Duration durreconvension) {
+		this.structure=structure;
+		this.application=application;
+		this.nbr_reel=nbr_reel;
+		this.totalAmount = totalAmount;
+		this.dateSignature = dateSignature;
+		this.durreconvension= durreconvension;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Structure  getStructure() {
+		return structure;
+	}
+	public void setStructure(Structure  structure) {
+		this.structure = structure;
+	}
+	
+	public Application getApplication() {
+		return application;
+	}
+
+	public void setApplication(Application application) {
+		this.application = application;
+	}
+
+	public BigDecimal getNbr_reel() {
+		return nbr_reel;
+	}
+	public void setNbr_reel(BigDecimal nbr_reel) {
+		this.nbr_reel = nbr_reel;
+	}
+	public BigDecimal getTotalAmount() {
+		return totalAmount;
+	}
+	public void setTotalAmount(BigDecimal totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public LocalDateTime getDateSignature() {
+		return dateSignature;
+	}
+
+	public void setDateSignature(LocalDateTime dateSignature) {
+		this.dateSignature = dateSignature;
+	}
+
+	public Duration getDurreconvension() {
+		return durreconvension;
+	}
+
+	public void setDurreconvension(Duration durreconvension) {
+		this.durreconvension = durreconvension;
+	}
+
+	
+	
+}

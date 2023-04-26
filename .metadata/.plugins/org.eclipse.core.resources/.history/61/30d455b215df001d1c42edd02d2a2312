@@ -1,0 +1,182 @@
+package com.app.security.services;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.app.models.Application;
+import com.app.models.Convension;
+import com.app.models.Structure;
+import com.app.repository.ApplicationRepository;
+import com.app.repository.ConvensionRepository;
+import com.app.repository.StructureRepository;
+
+import payload.request.ConvensionRequest;
+import payload.response.ConvensionResponse;
+
+@Service
+public class ConvensionService {
+	@Autowired 
+	ConvensionRepository convensionRepo;
+	private final ConvensionRepository convensionRepository;
+	
+    @Autowired
+    private ApplicationRepository applicationRepository;
+    
+    @Autowired
+    private StructureRepository structureRepository;
+    
+    private static final int MAX_DURATION_YEARS = 3;
+    
+    public ConvensionService(ConvensionRepository convensionRepository) {
+        this.convensionRepository = convensionRepository;
+    }
+    
+    public ConvensionResponse createConvension(ConvensionRequest request) {
+        String applicationCode = request.getApplicationCode();
+        String structureMinistere = request.getStructureCode();
+
+        Application application = applicationRepository.findByCode(applicationCode)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Application not found"));
+
+        Structure structure = structureRepository.findByMinistere(structureMinistere)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Structure not found"));
+        
+        
+        Convension convension = new Convension();
+        convension.setApplication(application);
+        convension.setStructure(structure);
+        convension.setNbr_reel(request.getNbr_reel());
+        convension.setTotalAmount(request.getNbr_reel().multiply(application.getPrix()));
+        //convension.setDateSignature(LocalDateTime.now());
+        /*LocalDateTime signatureDateTime = request.getDateSignature();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String signatureDateString = signatureDateTime.format(formatter);
+        convension.setSignatureDate(LocalDate.parse(signatureDateString, formatter));*/
+        LocalDateTime signatureDateTime = request.getSignatureDate().toLocalDate().atStartOfDay();
+        convension.setDateSignature(signatureDateTime);
+        
+        LocalDate expirationDate = calculateExpirationDate(request);
+       
+        LocalDateTime ConvensionDuration = request.getConvensionDuration();
+        LocalDate expirationDate = signatureDateTime.toLocalDate().plusYears(3);
+        //Save the convension to the database
+        convensionRepository.save(convension);
+
+      //Create a ConvensionResponse object with the required fields
+        ConvensionResponse response = new ConvensionResponse(application.getCode(), structure.getMinistere(),
+                application.getPrix(), request.getNbr_reel(), convension.getTotalAmount(),convension.getDateSignature());
+
+        return response;
+        
+    }
+    public LocalDate calculateExpirationDate(ConvensionRequest request) {
+        // Extract the duration string from the request
+        String duration = request.getConvensionDuration();
+        
+        // Check if the duration string contains the word "annee" or "an"
+        if (duration.contains("annee") || duration.contains("an")) {
+            // Extract the number of years from the string
+            int years = Integer.parseInt(duration.replaceAll("[^\\d.]", ""));
+            
+            // Add the years to the current date to get the expiration date
+            return LocalDate.now().plusYears(years);
+        }
+        
+        // Check if the duration string contains the word "mois"
+        if (duration.contains("mois")) {
+            // Extract the number of months from the string
+            int months = Integer.parseInt(duration.replaceAll("[^\\d.]", ""));
+            
+            // Add the months to the current date to get the expiration date
+            return LocalDate.now().plusMonths(months);
+        }
+        
+        // Check if the duration string contains the word "jour" or "journee", which means days
+        if (duration.contains("journee") || duration.contains("jour")) {
+            // Extract the number of days from the string
+            int days = Integer.parseInt(duration.replaceAll("[^\\d.]", ""));
+            
+            // Add the days to the current date to get the expiration date
+            return LocalDate.now().plusDays(days);
+        }
+        
+        // If the duration string doesn't match any of the above formats, throw an exception
+        throw new IllegalArgumentException("Invalid duration format: " + duration);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+ /* public Convension createConvension(ConvensionRequest request) {
+        String applicationCode = request.getApplicationCode();
+        String structureMinistere = request.getStructureCode();
+
+        // Retrieve the application from the database using the application code
+        Application application = applicationRepository.findByCode(applicationCode)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Application not found"));
+
+        // Retrieve the structure from the database using the ministry structure name
+        Structure structure = structureRepository.findByMinistere(structureMinistere)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Structure not found"));
+       
+        
+    
+        // Create a new Convension object with the validated fields
+        Convension convension = new Convension();
+        convension.setApplication(application);
+        convension.setStructure(structure);
+        convension.setNbr_reel(request.getNbr_reel());
+        
+        
+       
+        
+        //Save the convension to the database
+       return convensionRepository.save(convension);
+        
+       /* ConvensionResponse response = new ConvensionResponse(
+                convension.getApplication(),
+                convension.getStructure(),
+                applicationPrice
+        );
+
+        return response;
+    }*/
+
+   
+    
+    
+    
+    
+    
+    
+    
+    
+}

@@ -1,0 +1,71 @@
+package com.app.models;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@Entity
+@Table(	name = "structure")
+public class Structure {
+ 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
+	
+	@NotBlank
+	@Column(name = "id_ministere")
+    @JsonProperty("id_ministere")
+	private String id_ministere;
+	
+	@NotBlank
+	@Column(name = "libelle")
+    @JsonProperty("libelle")
+	private String libelle;
+
+	public Structure(Long id, @NotBlank String id_ministere, @NotBlank String libelle) {
+		super();
+		this.id = id;
+		this.id_ministere = id_ministere;
+		this.libelle = libelle;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getId_ministere() {
+		return id_ministere;
+	}
+
+	public void setId_ministere(String id_ministere) {
+		this.id_ministere = id_ministere;
+	}
+
+	public String getLibelle() {
+		return libelle;
+	}
+
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

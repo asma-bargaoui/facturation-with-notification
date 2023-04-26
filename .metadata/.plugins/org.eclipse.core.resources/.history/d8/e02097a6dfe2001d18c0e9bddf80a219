@@ -1,0 +1,114 @@
+package com.app.models;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(	name = "facture")
+public class Facture {
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+	
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "convension_id")
+	private Convention convension;
+	 
+    @Column(name = "structure")
+    private String structure;
+    
+    @Column(name="echance")
+    private Date echance;
+   
+    @Column(name="montant")
+    private BigDecimal montant;
+   
+    @Column(name="periode")
+    private Integer periode;
+   
+    @Column(name="paid")
+    private Boolean paid;
+
+	public Facture(Long id, Convention convension, String structure, Date echance, BigDecimal montant, Integer periode,
+			Boolean paid) {
+		super();
+		this.id = id;
+		this.convension = convension;
+		this.structure = structure;
+		this.echance = echance;
+		this.montant = montant;
+		this.periode = periode;
+		this.paid = paid;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Convention getConvension() {
+		return convension;
+	}
+
+	public void setConvension(Convention convension) {
+		this.convension = convension;
+	}
+
+	public String getStructure() {
+		return structure;
+	}
+
+	public void setStructure(String structure) {
+		this.structure = structure;
+	}
+
+	public Date getEchance() {
+		return echance;
+	}
+
+	public void setEchance(Date echance) {
+		this.echance = echance;
+	}
+
+	public BigDecimal getMontant() {
+		return montant;
+	}
+
+	public void setMontant(BigDecimal montant) {
+		this.montant = montant;
+	}
+
+	public Integer getPeriode() {
+		return periode;
+	}
+
+	public void setPeriode(Integer periode) {
+		this.periode = periode;
+	}
+
+	public Boolean getPaid() {
+		return paid;
+	}
+
+	public void setPaid(Boolean paid) {
+		this.paid = paid;
+	}
+
+    
+	
+}

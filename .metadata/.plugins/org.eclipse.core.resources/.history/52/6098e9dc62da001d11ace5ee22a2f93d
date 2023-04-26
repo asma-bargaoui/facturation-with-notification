@@ -1,0 +1,113 @@
+package com.app.security.services;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.app.models.Application;
+import com.app.models.Convension;
+import com.app.models.Structure;
+import com.app.repository.ApplicationRepository;
+import com.app.repository.ConvensionRepository;
+import com.app.repository.StructureRepository;
+
+import payload.request.ConvensionRequest;
+
+@Service
+public class ConvensionService {
+	@Autowired 
+	ConvensionRepository convensionRepo;
+	private final ConvensionRepository convensionRepository;
+	
+    @Autowired
+    private ApplicationRepository applicationRepository;
+    
+    @Autowired
+    private StructureRepository structureRepository;
+    
+    public ConvensionService(ConvensionRepository convensionRepository) {
+        this.convensionRepository = convensionRepository;
+    }
+    public Convension createConvension(ConvensionRequest request) {
+        String applicationCode = request.getApplication();
+        String structureMinistere = request.getStructure();
+
+        // Retrieve the application from the database using the application code
+        Application application = applicationRepository.findByCode(applicationCode)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Application not found"));
+
+        // Retrieve the structure from the database using the ministry structure name
+        Structure structure = structureRepository.findByMinistere(structureMinistere)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Structure not found"));
+
+        
+
+        // Create a new Convension object with the validated fields
+        Convension convension = new Convension();
+        convension.setApplication(applicationCode);
+        convension.setStructure(structureMinistere);
+        convension.setNbr_reel(request.getNbr_reel());
+        
+        BigDecimal prix = application.getPrix();
+        BigDecimal totalAmount = prix.multiply(request.getNbr_reel());
+        convension.setTotalAmount(totalAmount);
+        
+        // Save the convension to the database
+        return convensionRepository.save(convension);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*public Convension createConvension(ConvensionRequest request) {
+        String applicationCode = request.getApplication();
+        String structureMinistere = request.getStructure();
+         
+        Application application = applicationRepository.findByCode(applicationCode)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Structure not found"));
+        		
+        // Check if the structure exists in the database
+        Structure structure = structureRepository.findByMinistere(structureMinistere)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Structure not found"));
+         
+        // Create a new Convension object with the validated fields
+                Convension convension = new Convension();
+                convension.setApplication(applicationCode);
+                convension.setStructure(structureMinistere);
+                convension.setNbr_reel(request.getNbr_reel());
+                
+                BigDecimal prix = application.getPrix();
+                BigDecimal totalAmount = prix.multiply(request.getNbr_reel());
+                convension.setTotalAmount(totalAmount);
+                
+                // Save the convension to the database
+                return convensionRepository.save(convension);
+            }*/
+    }

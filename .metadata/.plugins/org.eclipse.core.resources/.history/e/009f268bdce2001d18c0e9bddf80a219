@@ -1,0 +1,61 @@
+package com.app.models;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(	name = "facture")
+public class Facture {
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+	
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "convension_id")
+	private Convention convension;
+	 
+    @Column(name = "structure")
+    private String structure;
+    
+    @Column(name="echance")
+    private Date echance;
+   
+    @Column(name="montant")
+    private Double montant;
+   
+    @Column(name="periode")
+    private Integer periode;
+   
+    @Column(name="paid")
+    private Boolean paid;
+	
+	
+}
+/*@Entity
+@Table(name = "facture")
+public class Facture {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "convension_id")
+    private Convension convension;
+
+    private String structure;
+    private Date echance;
+    private Double montant;
+    private Integer periode;*/

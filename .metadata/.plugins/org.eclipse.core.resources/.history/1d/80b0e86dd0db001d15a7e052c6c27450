@@ -1,0 +1,45 @@
+package payload.response;
+
+import java.math.BigDecimal;
+
+import com.app.models.Application;
+
+public class ConvensionResponse {
+	   private String application;
+	    private String structure;
+	    private BigDecimal price;
+
+	    public ConvensionResponse(String application, String structure, BigDecimal price) {
+	        this.application = application;
+	        this.structure = structure;
+	        this.price = price;
+	    }
+
+	    public String getApplication() {
+	        return application;
+	    }
+
+	    public void setApplication(String application) {
+	        this.application = application;
+	    }
+
+	    public String getStructure() {
+	        return structure;
+	    }
+
+	    public void setStructure(String structure) {
+	        this.structure = structure;
+	    }
+
+	    public BigDecimal getPrice() {
+	        return price;
+	    }
+
+	    public void setPrice(BigDecimal price) {
+	        this.price = price;
+	    }
+
+	
+    
+    
+}
