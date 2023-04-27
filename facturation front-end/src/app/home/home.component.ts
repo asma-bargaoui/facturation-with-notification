@@ -8,8 +8,8 @@ import { UserService } from '../_services/user.service';
 })
 export class HomeComponent implements OnInit {
   content?: string;
-  imageUrl="assets/img/avatar.png";
-  imageUrl1="assets/img/cni.jpg";
+  imageUrl="assets/img/fucku.jpg";
+  imageUrl1="assets/img/thrid.jpg";
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
@@ -23,3 +23,12 @@ export class HomeComponent implements OnInit {
     );
   }
 }
+
+
+
+
+
+
+
+
+

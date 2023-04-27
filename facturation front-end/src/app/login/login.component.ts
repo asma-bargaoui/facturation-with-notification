@@ -9,7 +9,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  imageUrl="assets/img/avatar.png";
+  imageUrl="assets/img/fucku.jpg";
 
   form: any = {
     username: null,

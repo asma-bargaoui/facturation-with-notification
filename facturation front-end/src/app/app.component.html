@@ -1,8 +1,27 @@
-
-  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
- 
+<div id="app">
+  <nav class="navbar navbar-expand navbar-outline-info bg-info">
+     <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+     
+      <li class="nav-item">
+        <a href="/login" class="nav-link" routerLink="login"><strong>Login</strong></a>
+      </li>
+    </ul>
 
+    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+      <li class="nav-item">
+        <a href="/profile" class="nav-link" routerLink="profile"><strong>{{ username }}</strong></a>
+        
+      </li>
+      <li class="nav-item">
+        <a href class="nav-link" (click)="logout()"><strong>LogOut</strong></a>
+      </li>
+    </ul>
+
+  </nav>
+
+</div>
    <input type="checkbox" id="check">
    <label for="check">
      <i class="fas fa-bars" id="btn"></i>
@@ -22,7 +41,7 @@
      </a>
      
      <li class="nav-item" *ngIf="showAdminBoard"></li>
-     <a href="/application">
+     <a href="/application-board">
         <i class="fas fa-calendar"></i>
        <span>Application</span>
      </a>

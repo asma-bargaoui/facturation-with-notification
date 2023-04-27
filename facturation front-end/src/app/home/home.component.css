@@ -1,0 +1,52 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#sect1 {
+  height: 100vh;
+  width: 100vw;
+  background-image: url('../../assets/img/second.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+  position: relative;
+}
+#sect1 .black-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 50%;
+    width: 50%;
+    background-color: rgba(92, 86, 168, 0.878);
+    opacity: 0.4;
+    z-index: 1;
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+  .column {
+    flex: 1;
+  }
+  #sect1 .column2 img {
+    max-width: 100%;
+    height: auto;
+    text-align: left;
+  padding-left: 20px;
+  }
+  #sect1 .column {
+    flex: 1;
+    padding: 20px;
+    text-align: right;
+  padding-right: 20px;
+  }
+  @media screen and (max-width: 768px) {
+    #sect1 .black-container {
+      flex-direction: column;
+    }
+    #sect1 .column {
+      text-align: center;
+    }
+  }
