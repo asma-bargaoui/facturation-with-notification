@@ -1,27 +1,50 @@
-<div class="col-md-12">
 
-
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-V/FCTlHFdtDq3w/3iLmSctPU8mVKchEzvTnTmZC9NSHzjcWcgrn+GhIOkTFyOhQ2V7W/g0GDeIMzbz0fQoPUQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<div class="card card-container">
-   
-      
-    <img [src]="imageUrl" alt="CNI" width="50px" class="profile-img-card"/>
+<div class="container">
+  <div class="screen">
+    <div class="screen__content">
+      <form
+        class="login"
+        *ngIf="!isSuccessful"
+        name="form"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        #f="ngForm"
+        novalidate
+      >
 
-    <form
-      *ngIf="!isSuccessful"
-      name="form"
-      (ngSubmit)="f.form.valid && onSubmit()"
-      #f="ngForm"
-      novalidate>
-      <div class="form-group">
-        
+         
+        <div class="login__field">
+          <input
+          type="email"
+          class="login__input"
+          placeholder="Email"
+          name="email"
+          [(ngModel)]="form.email"
+          required
+          email
+          #email="ngModel"
+        />
+        <div class="error-message" *ngIf="f.submitted && email.invalid">
+          <i class="fa fa-exclamation-circle"></i>
+          Ce champ doit être rempli correctement 
+        </div>
+        <i class="fa fa-exclamation-circle" style="margin-right: 5px;"></i>
+
+          <div   class="error-message" *ngIf="email.errors?.required">L'adresse mail est requis</div>
+
+          <div class="error-message" *ngIf="email.errors?.email">
+            <i class="fa fa-exclamation-circle"></i>
+            
+          </div>
+        </div>
+  
+      <div class="login__field">
         <input
           type="text"
-          class="form-control"
-          placeholder="Username"
+          class="login__input"
+          placeholder="Nom d'utilisateur"
           name="username"
           [(ngModel)]="form.username"
           required
@@ -29,92 +52,83 @@
           maxlength="20"
           #username="ngModel"
         />
-        <div class="alert-danger" *ngIf="f.submitted && username.invalid">
-          <div *ngIf="username.errors?.['required']">Username is required</div> ['required']
 
-          <div *ngIf="username.errors?.['minlength']">Username must be at least 3 characters</div>
+        <div
+          class="error-message"
+          *ngIf="username.errors && f.submitted"
+        >
+          <i class="fa fa-exclamation-circle"></i>
+          Ce champ doit être rempli
+        </div>
 
+        <div class="error-message" *ngIf="username.errors?.minlength">
+          <i class="fa fa-exclamation-circle"></i>
+         Le nom doit comporte au moins 3 caractéres 
+        </div>
+
+        <div class="error-message" *ngIf="username.errors?.maxlength">
+          <i class="fa fa-exclamation-circle"></i>
+          Username must be at most 20 characters
+        </div>
+      </div>
+
+        <div class="login__field">
+          <input 
+          type="{{ showPassword ? 'text' : 'password' }}" class="login__input"  
+          name="password"  placeholder="Mot de passe"
+            [(ngModel)]="form.password"
+            required
+            minlength="6"
+            #password="ngModel"/>
+            <span class="toggle-password" (click)="showPassword = !showPassword"> 
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/>
+              </svg>
+       </span> 
+       <div class="error-message" *ngIf="password.errors && f.submitted">
+                <i class="fa fa-exclamation-circle" style="margin-right: 5px;"></i>
+            <div class="error-message" *ngIf="password.errors?.required">Le mot de passe est requis</div>
+            <div *ngIf="password.errors?.minlength">
+              Le mot de passe doit comporter au moins 6 caractères
+            </div>
+        
+          </div> 
+
+
+
+
+          <div class="mt-3  select"    >
+            <select  name="role" id="" [(ngModel)]="user.role">
+              <option ></option>
+              <option [ngValue]="['User']">User</option>
+              <option [ngValue]="['Admin']">Admin</option>
            
-          <div *ngIf="username.errors?.['maxlength']">
-            Username must be at most 20 characters
-          </div>
-        </div>
+           
+            </select>
       </div>
-      <div class="form-group">
-      
        
-      <div class="form-group">
-        <input
-          type="password"
-          id="password-field"
-          class="form-control"
-          name="password"
-          placeholder="password"
-          [(ngModel)]="form.password"
-          required
-          minlength="6"
-          #password="ngModel"
-          />
-          <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 
-        <div class="alert-danger" *ngIf="f.submitted && password.invalid">
-          <div *ngIf="password.errors?.['required']">Password is required</div>
-          <div *ngIf="password.errors?.['minlength']">
-            Password must be at least 6 characters
+
+
+
+          <div class="form-group">
+          <button class="btn btn-outline-success btn-block mt-3"    >
+           Enregistrer
+          </button>
+          <button class="btn btn-outline-primary btn-block mt-3"    >
+     Mise â jour     
+    </button>
+    </div>
+<!-- *ngIf="onEditUser(user)" (click)="hideData()"-->
+    <!-- *ngIf="onEditUser(user)"  (click)="onClick()"-->
+            <div class="error-message" *ngIf="f.submitted && isSignUpFailed">
+              L'inscription a échoué!<br /> {{ errorMessage }}
+            </div>
+          <div class="alert alert-success" *ngIf="isSuccessful">
+            Votre inscription est réussie !
           </div>
-        </div>
-      </div>
-      <input
-      type="email"
-      class="form-control"
-      placeholder="Email"
-      name="email"
-      [(ngModel)]="form.email"
-      required
-      email
-      #email="ngModel"
-    />
-    <div class="alert-danger" *ngIf="f.submitted && email.invalid">
-      <div *ngIf="email.errors?.['required']">Email is required</div>
-      <div *ngIf="email.errors?.['email']">
-        Email must be a valid email address
-      </div>
-    </div>
-  </div>
-  <div class="form-group">
-    <button class="btn my-3 float-end" >
-      <div class="icon-container">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-          <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/>
-        </svg>
-      </div>
-    </button>
+
+         
+       </div>
+  
     
-    <button class="btn" >
-      <div class="icon-container">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/>
-        </svg>
-      </div>
-    </button>
-  </div>
-    <button class="btn btn-outline-primary btn-block">
-      enregistrer
-    </button>
-    <button class="btn btn-outline-primary btn-block">
-mise a jour     </button>
-      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-        Signup failed!<br />{{ errorMessage }}
-      </div>
-    </form>
-
-    <div class="alert alert-success" *ngIf="isSuccessful">
-      Your registration is successful!
-    </div>
-
-  </div>
-<script src="js/jquery.min.js"></script>
-<script src="js/popper.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/main.js"></script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v2b4487d741ca48dcbadcaf954e159fc61680799950996" integrity="sha512-D/jdE0CypeVxFadTejKGTzmwyV10c1pxZk/AqjJuZbaJwGMyNHY3q/mTPWqMUnFACfCTunhZUVcd4cV78dK1pQ==" data-cf-beacon='{"rayId":"7b5fa0657d1b0fee","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2023.3.0","si":100}' crossorigin="anonymous"></script>
