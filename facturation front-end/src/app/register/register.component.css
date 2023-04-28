@@ -1,63 +1,316 @@
-label {
-  display: block;
-  margin-top: 10px;
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+
+
+
+
+
+
+
+
+
+
+
+
+* {
+  outline: 0;
+  font-family: sans-serif
+}
+body {
+  background-color: #fafafa
+}
+span.msg,
+span.choose {
+  color: #555;
+  padding: 5px 0 10px;
+  display: inherit
+}
+.container {
+  width: 500px;
+  margin: 50px auto 0;
+  text-align: center
 }
 
-.card-container.card {
-  max-width: 400px ;
-  padding: 40px 40px;
-}
-
-.card {
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
+/*Styling Selectbox*/
+.dropdown {
+  width: 600px;
+  display: inline-block;
+  background-color: #fff;
   border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 2px rgb(204, 204, 204);
+  transition: all .5s ease;
+  position: relative;
+  font-size: 14px;
+  color: #474747;
+  height: 100%;
+  text-align: left;
+  
+}
+.dropdown .select {
+    cursor: pointer;
+    display: block;
+    padding: 10px;
+	width: 600px;
+
+}
+.dropdown .select > i {
+    font-size: 13px;
+    color: #888;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+    float: right;
+    line-height: 20px;
+	width: 600px;
+}
+.dropdown:hover {
+    box-shadow: 0 0 4px rgb(204, 204, 204);
+	width: 600px;
+}
+.dropdown:active {
+    background-color: #f8f8f8;
+	width: 600px;
+}
+.dropdown.active:hover,
+.dropdown.active {
+    box-shadow: 0 0 4px rgb(204, 204, 204);
+    border-radius: 2px 2px 0 0;
+    background-color: #f8f8f8;
+	width: 600px;
+}
+.dropdown.active .select > i {
+    transform: rotate(-90deg);
+	width: 600px;
+}
+.dropdown .dropdown-menu {
+    position: absolute;
+    background-color: #fff;
+    width: 600%;
+    left: 0;
+    margin-top: 1px;
+    box-shadow: 0 1px 2px rgb(204, 204, 204);
+    border-radius: 0 1px 2px 2px;
+    overflow: hidden;
+    display: none;
+    max-height: 144px;
+    overflow-y: auto;
+    z-index: 9
+}
+.dropdown .dropdown-menu li {
+    padding: 10px;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+	width: 600px;
+} 
+.dropdown .dropdown-menu {
+    padding: 0;
+    list-style: none;
+	width: 600px;
+}
+.dropdown .dropdown-menu li:hover {
+    background-color: #f2f2f2
+}
+.dropdown .dropdown-menu li:active {
+    background-color: #e2e2e2;
+	width: 600px;
 }
 
-.profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
+
+
+
+
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;	
+	font-family: Raleway, sans-serif;
 }
-.field-icon {
+
+body {
+	background: linear-gradient(90deg, #b42020, #dd091b);		
+}
+.error-message {
+  color: rgb(208, 21, 21);
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.error-message i {
+  margin-right: 5px;
+  color: rgb(208, 21, 21);
+}
+
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+}
+
+.screen {		
+	background: linear-gradient(90deg, #74b6e6, #5B9CC5);		position: relative;	
+	height: 650px;
+	width: 360px;	
+	box-shadow: 0px 0px 24px #feffff;
+}
+
+.screen__content {
+	z-index: 1;
+	position: relative;	
+	height: 100%;
+}
+
+.screen__background {		
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 0;
+	-webkit-clip-path: inset(0 0 0 0);
+	clip-path: inset(0 0 0 0);	
+}
+
+
+
+.screen__background__shape1 {
+	height: 520px;
+	width: 520px;
+	background: #D0E1F9;	
+	top: -50px;
+	right: 120px;	
+	border-radius: 0 72px 0 0;
+}
+
+.login {
+	width: 320px;
+	padding: 30px;
+	padding-top: 156px;
+}
+
+.login__field {
+	padding: 20px 0px;	
+	position: relative;	
+}
+
+.login__icon {
+	position: absolute;
+	top: 30px;
+	color: #3C6E8C;
+}
+
+.login__input {
+	border: none;
+	border-bottom: 2px solid #e9eaeb;
+	background: none;
+	padding: 10px;
+	padding-left: 24px;
+	font-weight: 700;
+	width: 75%;
+	transition: .2s;
+}
+
+.login__input:active,
+.login__input:focus,
+.login__input:hover {
+	outline: none;
+	border-bottom-color: #5B9CC5;
+}
+
+.login__submit {
+	background: #fff;
+	font-size: 14px;
+	margin-top: 30px;
+	padding: 16px 20px;
+	border-radius: 26px;
+	border: 1px solid rgb(74, 70, 187);
+	text-transform: uppercase;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	color: #4C489D;
+	box-shadow: 0px 2px 2px #5C5696;
+	cursor: pointer;
+	transition: .2s;
+}
+
+.login__submit:active,
+.login__submit:focus,
+.login__submit:hover {
+	border-color: #6A679E;
+	outline: none;
+}
+
+.button__icon {
+	font-size: 24px;
+	margin-left: auto;
+	color: #7875B5;
+
+}
+
+.social-login {	
+	position: absolute;
+	height: 140px;
+	width: 160px;
+	text-align: center;
+	bottom: 0px;
+	right: 0px;
+	color: #fff;
+}
+
+.social-icons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.social-login__icon {
+	padding: 20px 10px;
+	color: #fff;
+	text-decoration: none;	
+	text-shadow: 0px 0px 8px #f1f1f8;
+}
+
+.social-login__icon:hover {
+	transform: scale(1.5);	
+}
+
+
+.toggle-password svg {
+  height: 14px;
+}
+
+/* Move the eye icon inside the password input field */
+.card-container #password-field {
+  padding-right: 30px;
+  position: relative;
+}
+
+.card-container #password-field::before {
+  content: "";
   position: absolute;
-  top: 50%;
-  right: 15px;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  color: rgba(226, 26, 26, 0.9);
-}
-
-.fa-eye-slash:before {
-  content: "\f070";
-}
-
-*::before, *::after {
-  -webkit-box-sizing: border-box;
+  top: 60%; /* change the value to move the circle lower */
+  right: 5px; /* change the value to move the circle closer to the right */
+  width: 24px;
+  height: 24px;
+  border: 2px solid #faf7f7;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
   box-sizing: border-box;
 }
-.fa-fw {
-  width: 1.28571429em;
-  text-align: center;
-}
 
 
-.fa {
-  display: inline-block;
-  font: normal normal normal 14px/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+.card-container .toggle-password {
+  position: absolute;
+  top: 28%; /* change the value to move the icon lower */
+  right: 0; /* change the value to move the icon closer to the right */
+  transform: translateY(-50%);
+  cursor: pointer;
+  padding: 15px;
+
 }
+
+.select select {
+width: 250px; /* ajustez cette valeur en fonction de vos besoins */
+  }
