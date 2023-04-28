@@ -1,4 +1,4 @@
-<table class="table mt-5">
+<!--<table class="table mt-5">
     <thead class="table-danger">
       <tr>
         <th scope="col">#</th>
@@ -19,5 +19,33 @@
         </td>
       </tr>
     </tbody>
-  </table>
+  </table>-->
+
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <div class="container">
+    <div class="screen">
+      <div class="screen__content">
+  <form class="login" name="form"(ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate (submit)="onAppCreate()">
+    <div  class="login__field">  
+
+      <input type="text" class="login__input" name="code" placeholder="code" [(ngModel)]="form.code" required #code="ngModel">
+      <div class="error-message" *ngIf="code.errors && f.submitted"> <i class="fa fa-exclamation-circle"></i> Ce champ doit être rempli </div>  
+    </div>
+         
+        <div  class="login__field">     
+          <input type="text" class="login__input" name="libellé" placeholder="libellé" [(ngModel)]="form.libelle" required #libellé="ngModel">
+          <div class="error-message" *ngIf="libelle.errors && f.submitted"> <i class="fa fa-exclamation-circle"></i> Ce champ doit être rempli </div>  
+        </div>
+        <div  class="login__field">     
+          <input type="text" class="login__input" name="Prix unitaire" placeholder="Prix Unitaire" [(ngModel)]="form.prixunitaire" required #prixunitaire="ngModel">
+          <div class="error-message" *ngIf="prixunitaire.errors && f.submitted"> <i class="fa fa-exclamation-circle"></i> Ce champ doit être rempli </div>  
+        </div>
+            
+          <div class="form-group">
+            <button  type="submit"  class="btn btn-outline-success btn-block mt-5" value="ajouter App">Ajouter Application</button>
+          </div>
+       
+  </form> 
   
