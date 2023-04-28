@@ -1,0 +1,75 @@
+<!--<form (submit)="onAppCreate()">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Libellé</th>
+          <th>Prix unitaire</th>
+          <th>Action1</th>
+          <th>action2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input type="text" class="form-control" name="code" [(ngModel)]="form.code" required>
+          </td>
+          <td>
+            <input type="text" class="form-control" name="libelle" [(ngModel)]="form.libelle" required>
+          </td>
+         
+          <td>
+            <input type="text" class="form-control" name="prix" [(ngModel)]="form.prix" required>
+          </td>
+          <td>
+            <button type="submit" class="btn btn-outline-info" value="ajouter App">Add </button>
+          </td>
+         <!-- <td>
+            <button class="btn btn-outline-danger" (click)="onDeleteApp(form.Id)">Delete</button>
+          </td>-->
+       <!--  <td> <button class="btn btn-outline-success"  active [routerLink]="['/application-board']" >Show</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form> -->
+  
+  <button class="btn    my-3   float-end"  active [routerLink]="['/application-board']">
+    <div class="icon-container">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+      <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/>
+    </svg>
+    </div>
+    </button>
+  <table class="table mt-5">
+    <thead class="table-danger">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col"></th>
+        <th scope="col">code</th>
+        <th scope="col">libelle</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let app of Ids; index as i">
+        <th scope="row"></th>
+        <td>{{i+1}}</td>
+        <td>{{app.code}}</td>
+        <td>{{app.libelle}}</td>
+        <td>
+          <button class="btn  mx-3" (click)="onDelete(app.id)">
+          <div class="icon-container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+             <path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/>
+            </svg>
+
+
+            </div>
+
+        </button>
+        </td>
+      </tr>
+    </tbody>
+  </table> 
+  

@@ -1,0 +1,21 @@
+.icon-container {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    width: 1.25em;
+    height: 1.25em;
+  }
+  
+  .icon-container svg {
+    width: 100%;
+    height: 100%;
+    color: crimson;
+  }
+
+  .table{
+    border-collapse: collapse;
+    margin-left: 100px; 
+    }
+    th, td{
+    padding: 10px;
+    }
