@@ -1,61 +1,63 @@
+
+
 <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-<div id="app">
-  <nav class="navbar navbar-expand navbar-outline-info bg-info">
-     <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-     
-      <li class="nav-item">
-        <a href="/login" class="nav-link" routerLink="login"><strong>Login</strong></a>
-      </li>
-    </ul>
 
-    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-      <li class="nav-item">
-        <a href="/profile" class="nav-link" routerLink="profile"><strong>{{ username }}</strong></a>
-        
-      </li>
-      <li class="nav-item">
-        <a href class="nav-link" (click)="logout()"><strong>LogOut</strong></a>
-      </li>
-    </ul>
 
-  </nav>
 
+<input type="checkbox" id="check">
+<label for="check">
+  <i class="fas fa-bars" id="btn"></i>
+  <i class="fas fa-times" id="cancel"></i>
+</label>
+
+<div class="sidebar">
+  <br><br><br>
+  <a href="/home" (click)="currentPage='Home'">
+    <span><strong>Home</strong></span>
+  </a>
+  <a href="/admin" (click)="currentPage='Admin Board'">
+    <span><strong>Admin Board</strong></span>
+  </a>
+  <a href="application" (click)="currentPage='Application'">
+    <span><strong>Application</strong></span>
+  </a>
+  <a href="/structure" (click)="currentPage='Structure'">
+    <span><strong>Structure</strong></span>
+  </a>
 </div>
-   <input type="checkbox" id="check">
-   <label for="check">
-     <i class="fas fa-bars" id="btn"></i>
-     <i class="fas fa-times" id="cancel"></i>
-   </label>
-   <div class="sidebar">
-     <header>Menu</header>
-   
-     <a href="/home">
-       <i class="fas fa-link" routerLink="home"></i>
-       <span>Home</span>
-     </a>
-     
-     <a href="/admin">
-       <i class="fas fa-stream" routerLink="admin"></i>
-       <span>Admin Board</span>
-     </a>
-     
-     <li class="nav-item" *ngIf="showAdminBoard"></li>
-     <a href="/application-board">
-        <i class="fas fa-calendar"></i>
-       <span>Application</span>
-     </a>
 
-     <a href="#">
-       <i class="far fa-question-circle"></i>
-       <span>structure</span>
-     </a>
-   </div>
-   <div class="container">
-    <router-outlet></router-outlet>
-   
+
+<nav class="navbar">
+  <div class="navbar-left">
+    <img [src]="imageUrl" alt="CNI" width="50px" class="navbar-brand">
   </div>
-   
- 
-   
+  <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+    <li class="nav-item">
+      <div class="nav-links">
+        <a href="/login" class="nav-link" routerLink="login"><strong>Login</strong></a>
+      </div>
+    </li>
+  </ul>
+  <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+    <li class="nav-item">
+      <div class="nav-links">
+        <a href class="nav-link" (click)="logout()"><strong>LogOut</strong></a>
+      </div>
+    </li>
+  </ul>
+</nav>
 
+<div class="container" style="margin-left: 200px;margin-top: 20px;">
+  <div class="breadcrumb">
+    <ol>
+      <li><a href="/home">Home</a></li>
+      <li><a href="/admin">Admin Board</a></li>
+      <li><a href="/application">Application</a></li>
+      <li><a href="/structure">Structure</a></li>
+      <li><span>{{currentPage}}</span></li>
+    </ol>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>
